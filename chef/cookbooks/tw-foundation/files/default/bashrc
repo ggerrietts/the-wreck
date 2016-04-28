@@ -1,0 +1,62 @@
+
+# .bashrc
+
+# User specific aliases and functions
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+PATH="${HOME}/bin:/usr/local/bin:${PATH}:."
+PATH="${PATH}:/usr/sbin:/sbin"
+
+PATH=`perl -e 'foreach $i (split(":",$ENV{PATH})){ if (!$n{$i}){$n{$i}++;\
+	push(@n,$i);}} print join(":",@n);'`
+
+PROMPT_COMMAND='if [ $TERM != "linux" ] ; then echo -e "\033]0;${WINDOW_TITLE}\007"; fi'
+
+export EDITOR=/usr/bin/vim VISUAL=/usr/bin/vim
+
+set -o notify
+set -o emacs
+set -o ignoreeof
+set -o noclobber
+set -o posix
+
+ttystr=`tty | perl -pe 's|/dev/ttys0*(\d+)|p$1| ; s|/dev/tty(\d+)|$1| ; s|/dev/pts/(\d+)|p$1| ;'`
+hoststr=`hostname | cut -c -4 | tr [A-Z] [a-z]`
+PS1="\n\w\n$hoststr($ttystr):\u "
+export LESS="-X"
+	
+set autolist
+set filesc
+
+HISTSIZE=1000
+HISTFILESIZE=1000
+
+export PATH PS1 MANPATH HISTSIZE HISTFILESIZE
+
+alias "j=jobs"
+
+function xtitle {
+	if [ -z "$1" ]; then
+		echo xtitle requires an argument
+	else
+		export WINDOW_TITLE="$*"
+	fi
+}
+
+function defaulttitle {
+    userstr=`whoami`
+    xtitle "$hoststr($ttystr):$userstr"
+}
+defaulttitle
+
+function functions {
+	declare -F | grep ^declare | cut -d' ' -f 3- | grep -v ^_
+}
+
+if [ -f ~/.env/bin/activate ]; then
+    . ~/.env/bin/activate
+fi

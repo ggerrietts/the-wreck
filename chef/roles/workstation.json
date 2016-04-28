@@ -1,0 +1,10 @@
+{
+  "name": "workstation",
+  "description": "A Vagrant box for doing development.",
+  "default_attributes": {},
+  "run_list": [
+    "recipe[tw-foundation::default]",
+    "recipe[tw-database::default]",
+    "recipe[tw-webserver::default]"
+  ]
+}

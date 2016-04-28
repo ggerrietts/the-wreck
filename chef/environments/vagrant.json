@@ -1,0 +1,19 @@
+{
+    "name": "vagrant",
+    "description": "the environment that runs in a vagrant box",
+    "cookbook_versions": { },
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "default_attributes": {
+        "wreck": {
+            "user": "vagrant",
+            "group": "vagrant",
+            "homedir": "/home/vagrant",
+            "app_root": "/home/vagrant/the-wreck",
+            "virtualenv": "/home/vagrant/.env",
+            "shared_folder": "/vagrant"
+        }
+    },
+    "override_attributes": {
+    }
+}

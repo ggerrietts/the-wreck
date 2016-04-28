@@ -1,0 +1,5 @@
+source 'https://supermarket.chef.io'
+
+cookbook 'tw-foundation', path: './cookbooks/tw-foundation'
+cookbook 'tw-webserver', path: './cookbooks/tw-webserver'
+cookbook 'tw-database', path: './cookbooks/tw-database'

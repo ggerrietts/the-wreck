@@ -1,0 +1,13 @@
+<!doctype html>
+<title>Truculent Art</title>
+
+<h1>A Really Slow Page of Art Stuff</h1>
+{% for artist in artists %}
+<h3>{{ artist.name }}</h3>
+<ul>
+{% for work in artist.works %}
+<li>{{ work.work.title }} by {% for artist in work.work.artists %} {{ artist.name }}{% endfor %}</li>
+{% endfor %}
+</ul>
+
+{% endfor %}

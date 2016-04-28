@@ -1,0 +1,3 @@
+tf/.secret-vars
+*.pyc
+__pycache__/

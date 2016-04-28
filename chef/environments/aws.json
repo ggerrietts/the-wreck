@@ -1,0 +1,11 @@
+{
+    "name": "aws",
+    "description": "the environment that runs in aws",
+    "cookbook_versions": { },
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "default_attributes": {
+    },
+    "override_attributes": {
+    }
+}

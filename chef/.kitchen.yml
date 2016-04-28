@@ -1,0 +1,26 @@
+# vim: set sts=2 sw=2 et:
+---
+driver:
+  name: vagrant
+  synced_folders:
+    - ["..", "/vagrant"]
+  network:
+    - ["private_network", {ip: "192.168.12.34"}]
+  customize:
+    memory: 256
+
+provisioner:
+  name: chef_zero
+  environments_path: environments
+  roles_path: roles
+  client_rb:
+    environment: vagrant
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+      - role[workstation]
+    attributes:

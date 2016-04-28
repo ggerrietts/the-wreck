@@ -1,0 +1,82 @@
+set nocompatible              " be iMproved
+filetype off                  " required!
+" vundle stuff goes here if I bother
+filetype plugin indent on     " required!
+
+let mapleader = ","
+set history=1000
+set laststatus=2
+set backspace=indent,eol,start
+set number
+set showmatch
+set tabstop=8
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set nowrap
+set exrc
+set background=dark
+if has('syntax')
+  syntax on
+  set t_Co=16
+  colors solarized
+  au BufEnter * syntax sync fromstart
+endif
+set directory=~/.vim/swap//,.
+set backupdir=~/.vim/backup,.,/tmp
+set titlestring=%t\ (%.45{expand(\"%:p:~:h\")})%(\ %a%)
+set titlelen=100
+set noea
+set wildmenu
+set wildmode=list:longest
+set ruler
+set ignorecase
+set smartcase
+set scrolloff=3
+set incsearch
+set shortmess=atI
+set visualbell
+set noshowmode
+" skipped ultisnips
+" skipped YCM customization
+" skipped airline stuff hmm
+au BufRead,BufNewFile *.md setlocal spell
+au BufRead,BufNewFile *.txt setlocal spell
+
+
+noremap <silent> <leader>w :call ToggleWrap()<CR>
+function! ToggleWrap()
+    if &wrap
+        echo "Wrap OFF"
+        setlocal nowrap
+        set virtualedit=all
+        silent! nunmap <buffer> k
+        silent! nunmap <buffer> j
+        silent! nunmap <buffer> ^
+        silent! nunmap <buffer> 0
+        silent! nunmap <buffer> $
+    else
+        echo "Wrap ON"
+        setlocal wrap linebreak nolist
+        set virtualedit=
+        setlocal display+=lastline
+        noremap  <buffer> <silent> k gk
+        noremap  <buffer> <silent> j gj
+        noremap  <buffer> <silent> ^ g^
+        noremap  <buffer> <silent> 0 g0
+        noremap  <buffer> <silent> $ g$
+    endif
+endfunction
+
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    let _s = @/
+    keepjumps %s/\s\+$//e
+    call cursor(l, c)
+    let @/ = _s
+endfun
+
+autocmd FileType c,cpp,python,ruby,java autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+
+

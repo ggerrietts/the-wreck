@@ -1,0 +1,8 @@
+Flask
+SQLAlchemy
+flask-sqlalchemy
+requests
+gunicorn
+ipython
+nose
+psycopg2
