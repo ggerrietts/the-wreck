@@ -2,7 +2,7 @@
 # Cookbook Name:: tw-webserver
 # Recipe:: nginx
 
-package "nginx"
+package "nginx-full"
 
 # config file, from template
 # template "/etc/whatever" do

@@ -3,6 +3,7 @@ import itertools
 import random
 import re
 from app import db
+from sqlalchemy.sql import func
 
 def random_number_around(mean, stdev):
     while 1:
@@ -75,15 +76,11 @@ class Player(db.Model):
         return hashlib.md5(encoded).hexdigest()
 
     @classmethod
-    def generate_player(cls, surnames, first_names):
+    def generate_player(cls, name_source):
         """ Generate a batch of player objects from the input sequences
-
-        >>> Player.LOGINS = set()
-        >>> [(x.id, x.login, x.first_name, x.last_name) for x in Player.generate_player(["Smith", "Gerrietts"], ["Jane", "Geoff"])]
-        [(1, 'jsmith1', 'Jane', 'Smith'), (2, 'jgerriett1', 'Jane', 'Gerrietts'), (3, 'gsmith1', 'Geoff', 'Smith'), (4, 'ggerriett1', 'Geoff', 'Gerrietts')]
         """
         idnum = 0
-        for name, surname in itertools.product(first_names, surnames):
+        for name, surname in name_source:
             idnum += 1
             player = cls(
                 id=idnum,
@@ -93,6 +90,18 @@ class Player(db.Model):
                 last_name=surname
             )
             yield player
+
+    @classmethod
+    def generate_existing_player(cls):
+        qry = db.session.query(func.min(cls.id).label('min_id'),
+                               func.max(cls.id).label('max_id'))
+        res = qry.one()
+        while True:
+            seq = list(range(res.min_id, res.max_id+1))
+            random.shuffle(seq)
+            for p_id in seq:
+                yield cls.query.get(p_id)
+
 
 
 class Game(db.Model):
@@ -157,9 +166,6 @@ class Roll(db.Model):
                         roll.parse_code(dice_code)
                         roll.roll()
                         yield roll
-
-
-
 
     @staticmethod
     def adjust_number_of_rolls(target, current, limit, players):

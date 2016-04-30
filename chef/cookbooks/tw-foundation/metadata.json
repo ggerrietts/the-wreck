@@ -1,0 +1,34 @@
+{
+  "name": "tw-foundation",
+  "description": "Establishes a nice foundation for wreckstations.",
+  "long_description": "Installs a variety of important packages.",
+  "maintainer": "Geoff Gerrietts",
+  "maintainer_email": "geoff@gerrietts.net",
+  "license": "MIT",
+  "platforms": {
+  },
+  "dependencies": {
+    "poise-python": "~> 1.2.1",
+    "apt": "~> 2.9.2",
+    "firewall": "~> 2.4.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.1.0",
+  "source_url": "",
+  "issues_url": ""
+}

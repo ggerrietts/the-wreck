@@ -1,3 +1,5 @@
+import random
+import itertools
 from models import db, Player, Game, Roll
 from models import add_to_session_passthru, random_number_around, arbitrary_dice_pattern
 
@@ -43,20 +45,38 @@ first_names = ['Jacob', 'Michael', 'Joshua', 'Matthew', 'Daniel', 'Christopher',
                'Jennifer', 'Alexandra', 'Allison', 'Haley', 'Maria', 'Kaylee',
                'Lily', 'Makayla', 'Brooke', 'Nicole', 'Mackenzie', 'Addison',
                'Stephanie', 'Lillian', 'Andrea', 'Zoe', 'Faith', 'Kimberly',
-               'Madeline', 'Alexa', 'Katelyn', 'Gabriella', 'Gabrielle',
+               'Madeline', 'Alexa', 'Katelyn', 'Gwendolyn', 'Gabrielle',
                'Trinity', 'Amanda', 'Kylie', 'Mary', 'Paige', 'Riley', 'Leah',
                'Jenna', 'Sara', 'Rebecca', 'Michelle', 'Sofia', 'Vanessa',
                'Jordan', 'Angelina', 'Caroline', 'Avery', 'Audrey', 'Evelyn',
-               'Maya', 'Claire', 'Autumn', 'Jocelyn', 'Ariana', 'Nevaeh',
+               'Maya', 'Claire', 'Autumn', 'Jocelyn', 'Bridget', 'Nevaeh',
                'Arianna', 'Jada', 'Bailey', 'Brooklyn', 'Aaliyah', 'Amber',
                'Isabel', 'Mariah', 'Danielle', 'Melanie', 'Sierra', 'Erin',
                'Molly', 'Amelia', ]
 
+
+def name_source(snames, fnames):
+    chunks = []
+    for i in range(10):
+        # double the last-name list
+        last = snames + snames
+        # copy the first-name list
+        first = fnames[:]
+        # shuffle them
+        random.shuffle(last)
+        random.shuffle(first)
+        chunks.append(zip(first, last))
+    return itertools.chain(*chunks)
+
+
+def complex_player_source(snames, fnames, sess):
+    names = name_source(snames, fnames)
+    p_src = add_to_session_passthru(Player.generate_player(names), sess)
+    return itertools.chain(p_src, Player.generate_existing_player())
+
+
 def create_data(snames, fnames, sess, max_rolls=500000):
-    p_src = add_to_session_passthru(
-        Player.generate_player(snames, fnames),
-        sess
-    )
+    p_src = complex_player_source(snames, fnames, sess)
     g_src = add_to_session_passthru(
         Game.generate_game(
             player_source=p_src,

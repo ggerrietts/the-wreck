@@ -1,13 +1,29 @@
-<!doctype html>
-<title>Truculent Art</title>
+{% extends "base.html" %}
+{% block title %}Truculent Dice{% endblock %}
 
-<h1>A Really Slow Page of Art Stuff</h1>
-{% for artist in artists %}
-<h3>{{ artist.name }}</h3>
-<ul>
-{% for work in artist.works %}
-<li>{{ work.work.title }} by {% for artist in work.work.artists %} {{ artist.name }}{% endfor %}</li>
+{% block content %}
+<h1>A Really Slow Page of Dice Stuff</h1>
+{% for player in players %}
+<div class="col-md-4">
+<div class="panel panel-default">
+  <div class="panel-heading"><h5>{{ player.first_name }} {{ player.last_name }} (<i>{{ player.login }}</i>)</h5></div>
+  <table class="table">
+  <thead><tr>
+    <th>die type</th>
+    <th>num rolled</th>
+    <th>avg. roll</th>
+  </tr></thead>
+  <tbody>
+  {% for stats in player.rollstats %}
+  <tr>
+    <td>d{{ stats[0] }}</td>
+    <td>{{ stats[2] }}</td>
+    <td>{{ stats[1] / stats[2] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+</div>
+</div>
 {% endfor %}
-</ul>
-
-{% endfor %}
+{% endblock %}

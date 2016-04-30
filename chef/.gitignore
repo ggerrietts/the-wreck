@@ -14,3 +14,10 @@ bin/*
 
 .kitchen/
 .kitchen.local.yml
+
+**/attributes/secret.rb
+vendor/
+
+oboeware*.zip
+
+src/flaskconfig.py

@@ -7,8 +7,11 @@ Performance problems to highlight:
 - Noisy neighbor
 - Memory fragmentation in Python
 - Remote timeout
-- Webserver queueing
-- Connection-thrash
+- Web server queueing
+
+1. create infra/.secret-vars with access_key and secret_key in them.
+2. create ./chef/cookbooks/tw-foundation/attributes/secret.rb with wreck.tly_key and wreck.db_password
+3. add ./chef/cookbooks/tw-webserver/files/default/oboeware.zip (unreleased Py3K instrumentation)
 
 
 ##TODO
@@ -21,13 +24,15 @@ Performance problems to highlight:
   - [x] base install
   - [ ] nginx config
   - [ ] gunicorn config
+  - [ ] instrumentation
   - [ ] the apps formidable
 - [ ] traffic generation strategy
 
-- [ ] Truculent Query
-  - [ ] big query
-- [ ] Thousand Selects
+- [x] Truculent Query
+  - [x] big query
+- [x] Thousand Selects
 - [ ] Noisy Neighbor
 - [ ] memory fragmentation
 - [ ] remote timeout
 - [ ] webserver queueing
+- [ ] externalize postgres password

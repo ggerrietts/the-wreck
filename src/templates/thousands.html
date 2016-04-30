@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Death By 1,000 Queries{% endblock %}
+
+{% block content %}
+<h1>Look At All These Games</h1>
+<table class="table">
+  <thead><tr><th>Game</th><th>Players</th><th>Total Rolls</th></tr></thead>
+  <tbody>
+{% for game in games %}
+<tr>
+  <td>{{ game.name }}</td>
+  <td>{{ game.players|map(attribute='login')|join(', ') }}</td>
+  <td>{{ game.rolls|count }}</td>
+</tr>
+{% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -6,3 +6,4 @@ gunicorn
 ipython
 nose
 psycopg2
+gevent

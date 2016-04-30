@@ -45,3 +45,10 @@ pip_requirements "#{appr}/src/requirements.txt" do
     group vgrp
     virtualenv venv
 end
+
+template "#{appr}/src/flaskconfig.py" do
+    source "flaskconfig.py.erb"
+    user vusr
+    group vgrp
+    mode '0644'
+end
