@@ -4,7 +4,11 @@
 #
 # config file, from template
 #
-# template "/etc/whatever" do
-#     source ["#{node.role}/gunicorn.conf.erb", "gunicorn.conf.erb"]
-#     etc
-# end
+template "/etc/init/gunicorn.conf" do
+  source "gunicorn.conf.erb"
+end
+
+service "gunicorn" do
+    action :start
+end
+

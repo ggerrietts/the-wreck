@@ -2,7 +2,7 @@
 # Cookbook Name:: tw-webserver
 # Recipe:: traceview
 
-hdir = node['wreck']['home_dir']
+hdir = node['wreck']['homedir']
 tvkey = node['wreck']['tly_key']
 vusr = node['wreck']['user']
 vgrp = node['wreck']['group']
@@ -33,7 +33,7 @@ bash "install oboeware" do
   cwd hdir
   code <<-EOH
     unzip oboeware.zip
-    mv oboeware-issue_146 oboeware
+    mv oboeware-master oboeware
     cd oboeware
     #{venv}/bin/python setup.py install
     EOH

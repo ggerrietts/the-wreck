@@ -19,3 +19,5 @@ cookbook_file "/home/#{vusr}/.vimrc" do
     group vgrp
     source "vimrc"
 end
+
+package "build-essential"

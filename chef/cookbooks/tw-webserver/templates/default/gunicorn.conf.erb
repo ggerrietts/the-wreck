@@ -1,0 +1,12 @@
+description "gunicorn application server running The Wreck"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+setuid <%= node['wreck']['web_user'] %>
+setgid <%= node['wreck']['web_group'] %>
+
+env PATH=<%= node['wreck']['virtualenv'] %>/bin
+chdir <%= node['wreck']['app_root'] %>/src
+exec gunicorn --workers 3 --bind unix:/tmp/thewreck.sock -m 007 wsgi

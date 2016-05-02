@@ -22,11 +22,13 @@ Performance problems to highlight:
   - [x] data
 - [x] webserver recipe
   - [x] base install
-  - [ ] nginx config
-  - [ ] gunicorn config
-  - [ ] instrumentation
-  - [ ] the apps formidable
-- [ ] traffic generation strategy
+  - [x] gunicorn config
+  - [x] nginx config
+  - [x] instrumentation
+- [x] traffic generation strategy
+- [ ] update Packer image
+- [ ] make terraform spit out nodes
+- [ ] capture some quality stuff
 
 - [x] Truculent Query
   - [x] big query

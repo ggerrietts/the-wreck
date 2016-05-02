@@ -9,7 +9,7 @@ from models import Player, Game, Roll
 log = logging.getLogger(__name__)
 
 @app.route('/1000queries/<login>')
-def slowmatch(login):
+def thousand(login):
     pat = '%{}%'.format(login)
     players = Player.query.filter(Player.login.like(pat)).all()
     all_games = {}

@@ -1,3 +1,4 @@
 tf/.secret-vars
+infra/.secret-vars
 *.pyc
 __pycache__/

@@ -1,14 +1,12 @@
-import logging
 from flask import render_template
 from sqlalchemy.orm import contains_eager
 from sqlalchemy.sql import func
 from app import app, db
 from models import Player, Game, Roll
 
-log = logging.getLogger(__name__)
 
 @app.route('/truculent/<login>')
-def slowmatch(login):
+def truculent(login):
     pat = "%{}%".format(login)
     roll_qry = (db.session.query(
                     Player.login.label('login'),
