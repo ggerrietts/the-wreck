@@ -85,7 +85,7 @@ class TrafficGenerator(object):
             self.counter += 1
             if not self.counter % 10:
                 flag = True
-        print_(".", end="")
+        print_(".", end="", flush=True)
 
     def start(self):
         self.start_time = time.time()
