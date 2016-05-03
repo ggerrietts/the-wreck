@@ -6,6 +6,7 @@ import signal
 from gevent.coros import BoundedSemaphore
 import time
 from itertools import chain, cycle
+from six import print_, next
 
 REGISTRY = {}
 
@@ -16,19 +17,19 @@ log_levels = {v.lower(): getattr(logging, v)
 
 def launch_generators(gen_list):
     gens = ", ".join(gen_list)
-    print("Launching traffic generators: {}".format(gens))
+    print_("Launching traffic generators: {}".format(gens))
     gevent.signal(signal.SIGQUIT, gevent.kill)
     all_generators = [REGISTRY[g]() for g in gen_list]
     nested_workers = [g.start() for g in all_generators]
     all_workers = list(chain.from_iterable(nested_workers))
     gevent.joinall(all_workers)
-    print("Traffic generation complete.")
+    print_("Traffic generation complete.")
 
 
 def list_generators():
     global REGISTRY
-    print("Available generators:")
-    print(" ", ", ".join(REGISTRY.keys()))
+    print_("Available generators:")
+    print_(" ", ", ".join(REGISTRY.keys()))
 
 
 def build_arg_parser():
@@ -79,8 +80,12 @@ class TrafficGenerator(object):
         return out
 
     def request_completed(self):
+        flag = False
         with self.mutex:
             self.counter += 1
+            if not self.counter % 10:
+                flag = True
+        print_(".", end="")
 
     def start(self):
         self.start_time = time.time()
@@ -146,7 +151,7 @@ def main():
     if not generators:
         parser.error("Requires at least one generator, or --list option.")
 
-    print("Setting up logging to {} at level {}".format(args.logfile, args.loglevel))
+    print_("Setting up logging to {} at level {}".format(args.logfile, args.loglevel))
     logging.basicConfig(filename=args.logfile,
                         level=log_levels[args.loglevel],
                         format="%(asctime)s %(name)s %(levelname)s %(message)s")

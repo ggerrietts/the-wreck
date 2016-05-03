@@ -7,3 +7,4 @@ ipython
 nose
 psycopg2
 gevent
+six
