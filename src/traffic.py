@@ -34,8 +34,8 @@ def list_generators():
 def build_arg_parser():
     parser = argparse.ArgumentParser(description="Launch a traffic generator.")
     parser.add_argument('-l', '--list', action="store_true", help="list available traffic generators")
-    parser.add_argument('--logfile', action="store", default='/var/log/traffic.log',
-                        help="output to logfile (default: /var/log/traffic.log)")
+    parser.add_argument('--logfile', action="store", default='traffic.log',
+                        help="output to logfile (default: traffic.log)")
     parser.add_argument('--loglevel', action="store", default='info',
                         help="logging level (default: info)",
                         choices=log_levels.keys())
