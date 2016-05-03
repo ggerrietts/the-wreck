@@ -8,7 +8,8 @@
   "platforms": {
   },
   "dependencies": {
-    "tw-foundation": "~> 0.1.0"
+    "tw-foundation": "~> 0.1.0",
+    "firewall": "~> 2.4.0"
   },
   "recommendations": {
   },

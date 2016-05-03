@@ -33,3 +33,8 @@ execute "create new db" do
     not_if { `sudo -u postgres psql -tAc \"SELECT 1 FROM pg_database WHERE datname='#{db}'\" | wc -l`.chomp == "1" }
 end
 
+firewall_rule 'open up pgsql' do
+  command :allow
+  port '5432'
+end
+
