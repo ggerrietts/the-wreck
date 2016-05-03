@@ -96,7 +96,7 @@ def login_patterns():
     return cycle([('smith',), ('jones',),  ('jon',),  ('garcia',), ('nguyen',), ('mart',), ('hug')])
 
 class TruculentTrafficGenerator(TrafficGenerator):
-    url = 'http://localhost:5000/truculent/{}'
+    url = 'http://web.wreck.tlys.us/truculent/{}'
     label = "truculent"
 
     def __init__(self):
@@ -116,7 +116,7 @@ register(TruculentTrafficGenerator)
 
 
 class ThousandTrafficGenerator(TrafficGenerator):
-    url = 'http://localhost:5000/1000requests/{}'
+    url = 'http://web.wreck.tlys.us/1000requests/{}'
     label = "thousand"
 
     def __init__(self, argsource):
