@@ -16,7 +16,6 @@ default['wreck']['github_repo'] = 'git://github.com/ggerrietts/the-wreck.git'
 default['wreck']['postgres_password'] = 'funkyjunk'
 default['wreck']['db_user'] = 'wreck'
 
-default['wreck']['db_host'] = 'localhost'
 default['wreck']['db_name'] = 'the_wreck'
 
 default['wreck']['pip_requirements'] = '/home/www/wreck/leadpipe/etc/requirements.txt'

@@ -35,6 +35,6 @@ end
 
 firewall_rule 'open up pgsql' do
   command :allow
-  port '5432'
+  port 5432
 end
 

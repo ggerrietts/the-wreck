@@ -38,3 +38,6 @@ Performance problems to highlight:
 - [ ] remote timeout
 - [ ] webserver queueing
 - [ ] externalize postgres password
+- [ ] postgres server config: listen address in postgresql.conf and auth line in pg_hba.conf
+- [ ] let's vendor stuff via scp eh
+- [ ] /opt/chef/bin and /opt/chef/embedded/bin

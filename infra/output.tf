@@ -1,6 +1,4 @@
-output "cname" {
-    value = "${aws_route53_record.db_cname.fqdn}"
-    value = "${aws_route53_record.traffic_cname.fqdn}"
-    value = "${aws_route53_record.web_cname.fqdn}"
-    value = "${aws_route53_record.aux_cname.fqdn}"
-}
+# output "web_cname" { value = "${module.web.cname}" }
+# output "aux_cname" { value = "${module.aux.cname}" }
+# output "traffic_cname" { value = "${module.traffic.cname}" }
+output "db_cname" { value = "${module.db.cname}" }
