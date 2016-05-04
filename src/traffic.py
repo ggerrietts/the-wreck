@@ -124,7 +124,7 @@ class ThousandTrafficGenerator(TrafficGenerator):
     url = 'http://web.wreck.tlys.us/1000requests/{}'
     label = "thousand"
 
-    def __init__(self, argsource):
+    def __init__(self):
         super(ThousandTrafficGenerator, self).__init__()
         self.args = login_patterns()
 
