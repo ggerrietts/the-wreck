@@ -3,14 +3,11 @@ from sqlalchemy.orm import contains_eager
 from sqlalchemy.sql import func
 from app import app, db
 from models import Player, Game, Roll
-import logging
-log = logging.getLogger(__name__)
 
 
 @app.route('/truculent/<login>')
 def truculent(login):
     pat = "%{}%".format(login)
-    log.warn("pat: {}".format(pat))
     roll_qry = (db.session.query(
                     Player.login.label('login'),
                     Roll.player_id.label('player_id'),
@@ -29,7 +26,6 @@ def truculent(login):
                   join(roll_qry, Player.id == roll_qry.c.player_id).
                   filter(Player.login.like(pat)))
     qry_rslt = player_qry.all()
-    log.warn("len(qry_rslt): {}".format(len(qry_rslt)))
 
     player_hash = {}
     for (player, die, total, num) in qry_rslt:

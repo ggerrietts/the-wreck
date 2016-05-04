@@ -26,9 +26,8 @@ Performance problems to highlight:
   - [x] nginx config
   - [x] instrumentation
 - [x] traffic generation strategy
-- [ ] update Packer image
-- [ ] make terraform spit out nodes
-- [ ] capture some quality stuff
+- [x] update Packer image
+- [x] make terraform spit out nodes
 
 - [x] Truculent Query
   - [x] big query
@@ -39,5 +38,4 @@ Performance problems to highlight:
 - [ ] webserver queueing
 - [ ] externalize postgres password
 - [ ] postgres server config: listen address in postgresql.conf and auth line in pg_hba.conf
-- [ ] let's vendor stuff via scp eh
-- [ ] /opt/chef/bin and /opt/chef/embedded/bin
+- [ ] need to fix the git stuff so it freshens
