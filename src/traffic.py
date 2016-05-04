@@ -105,7 +105,7 @@ class TruculentTrafficGenerator(TrafficGenerator):
     label = "truculent"
 
     def __init__(self):
-        super().__init__()
+        super(TruculentTrafficGenerator, self).__init__()
         self.args = login_patterns()
 
     def traffic(self):
@@ -125,7 +125,7 @@ class ThousandTrafficGenerator(TrafficGenerator):
     label = "thousand"
 
     def __init__(self, argsource):
-        super().__init__()
+        super(ThousandTrafficGenerator, self).__init__()
         self.args = login_patterns()
 
     def traffic(self):
