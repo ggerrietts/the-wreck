@@ -14,7 +14,6 @@ directory "/deploy" do
     group vgrp
 end
 
-include_recipe "tw-webserver::traceview"
 include_recipe "tw-webserver::nginx"
 include_recipe "tw-webserver::gunicorn"
 

@@ -1,6 +1,7 @@
 import random
 import itertools
 from six import print_, next
+from six.moves import range
 from models import db, Player, Game, Roll
 from models import add_to_session_passthru, random_number_around, arbitrary_dice_pattern
 

@@ -11,7 +11,7 @@
     "source_ami": "ami-2b594f41",
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "gg-wreck-foundation"
+    "ami_name": "gg-wreck"
   }],
   "provisioners": [{
     "type": "chef-solo",

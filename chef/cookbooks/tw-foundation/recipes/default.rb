@@ -9,9 +9,8 @@ package 'vim'
 include_recipe "tw-foundation::tooling"
 
 package 'git'
-package 'supervisor'
 
-include_recipe 'tw-foundation::supervisorctl'
+include_recipe 'tw-foundation::traceview'
 
 include_recipe 'tw-foundation::pgclient'
 include_recipe 'tw-foundation::python'

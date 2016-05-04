@@ -22,7 +22,7 @@ provider "aws" {
 
 resource "aws_instance" "ec2_wreck" {
     provider                = "aws.traceview-dev"
-    ami                     = "ami-40bb5a2d"
+    ami                     = "ami-9b49a8f6"
     instance_type           = "t2.medium"
     key_name                = "traceview-dev"
     vpc_security_group_ids  =  ["sg-1e827465"]
@@ -31,9 +31,6 @@ resource "aws_instance" "ec2_wreck" {
     }
     connection {
       user = "ubuntu"
-    }
-    provisioner "local-exec" {
-      command = "./gen-local-rb.sh ${var.node_name}"
     }
     provisioner "remote-exec" {
       inline = ["rm -r /home/ubuntu/cookbooks", "mkdir /home/ubuntu/cookbooks"]
@@ -45,6 +42,10 @@ resource "aws_instance" "ec2_wreck" {
 
     provisioner "remote-exec" {
       inline = ["echo \"${var.node_name}\" >| /home/ubuntu/role"]
+    }
+
+    provisioner "remote-exec" {
+      script = "gen-local-rb.sh"
     }
 
     provisioner "remote-exec" {

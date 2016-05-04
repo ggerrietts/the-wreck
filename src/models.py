@@ -4,7 +4,8 @@ import random
 import re
 from app import db
 from sqlalchemy.sql import func
-from six import next
+from six import next, print_
+from six.moves import zip
 
 def random_number_around(mean, stdev):
     while 1:
@@ -27,7 +28,7 @@ def add_to_session_passthru(source, session):
     while 1:
         obj = next(source)
         session.add(obj)
-        if not len(session.new) % 1000:
+        if not len(session.new) % 10:
             session.commit()
         yield obj
 
@@ -73,7 +74,7 @@ class Player(db.Model):
     @staticmethod
     def build_password(parts):
         tmpl = "SoSalty!" + (":{}" * len(parts))
-        encoded = tmpl.format(*parts).encode('utf-8')
+        encoded = tmpl.format(*parts)
         return hashlib.md5(encoded).hexdigest()
 
     @classmethod
@@ -194,11 +195,13 @@ class Roll(db.Model):
             new_target += 1
         return new_target
 
-    def parse_code(self, dice):
+    def parse_code(self, dice=None):
         """ processes a 'dice code'.
         dice codes are D&D style, like 4d6+2
 
         """
+        if dice is None:
+            dice = self.code
         m = self.DICE_PAT.match(dice)
         if not m:
             raise ValueError("Dice string '{}' is formatted improperly.".format(dice))
