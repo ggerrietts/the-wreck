@@ -121,8 +121,8 @@ register(TruculentTrafficGenerator)
 
 
 def login_patterns():
-    return cycle([('gsmith1',), ('ajones1',), ('fgarcia1',), ('cnguyen1',), ('gsmith2',), ('gjones1',), ('jgarcia1',),
-                  ('nnguyen1',), ('tmartinez1',), ('jmartinez1'), ('amartin1')])
+    return cycle([('gsmith',), ('ajones',), ('fgarcia',), ('cnguyen',), ('gsmith',), ('gjones',), ('jgarcia',),
+                  ('nnguyen',), ('tmartinez',), ('jmartinez'), ('amartin')])
 
 class ThousandTrafficGenerator(TrafficGenerator):
     url = 'http://web.wreck.tlys.us/1000queries/{}'
