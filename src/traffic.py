@@ -120,7 +120,7 @@ class TruculentTrafficGenerator(TrafficGenerator):
 register(TruculentTrafficGenerator)
 
 
-def login_patterns():
+def more_login_patterns():
     return cycle([('gsmith',), ('ajones',), ('fgarcia',), ('cnguyen',), ('gsmith',), ('gjones',), ('jgarcia',),
                   ('nnguyen',), ('tmartinez',), ('jmartinez',), ('amartin',)])
 
@@ -130,7 +130,7 @@ class ThousandTrafficGenerator(TrafficGenerator):
 
     def __init__(self):
         super(ThousandTrafficGenerator, self).__init__()
-        self.args = login_patterns()
+        self.args = more_login_patterns()
 
     def traffic(self):
         while not self.limit_exceeded():
