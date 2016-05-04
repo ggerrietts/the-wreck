@@ -121,7 +121,7 @@ register(TruculentTrafficGenerator)
 
 
 class ThousandTrafficGenerator(TrafficGenerator):
-    url = 'http://web.wreck.tlys.us/1000requests/{}'
+    url = 'http://web.wreck.tlys.us/1000queries/{}'
     label = "thousand"
 
     def __init__(self):
