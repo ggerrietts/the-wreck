@@ -9,10 +9,10 @@ appr = node['wreck']['app_root']
 repo = node['wreck']['github_repo']
 share = node['wreck']['shared_folder']
 
-python_runtime "3"
+python_runtime "2"
 
 python_virtualenv venv do
-    python "3"
+    python "2"
     user vusr
     group vgrp
 end

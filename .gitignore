@@ -1,3 +1,8 @@
 infra/.secret-vars.json
+infra/.terraform
+infra/terraform.tfstate
+infra/terraform.tfstate.backup
+infra/*.log
+chef/**/local.rb
 *.pyc
 __pycache__/

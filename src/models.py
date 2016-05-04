@@ -4,6 +4,7 @@ import random
 import re
 from app import db
 from sqlalchemy.sql import func
+from six import next
 
 def random_number_around(mean, stdev):
     while 1:

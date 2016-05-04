@@ -1,5 +1,6 @@
 import random
 import itertools
+from six import print_, next
 from models import db, Player, Game, Roll
 from models import add_to_session_passthru, random_number_around, arbitrary_dice_pattern
 
@@ -97,7 +98,7 @@ def create_data(snames, fnames, sess, max_rolls=500000):
         while 1:
             next(r_src)
     except StopIteration:
-        print("Database loaded.")
+        print_("Database loaded.")
     finally:
         sess.commit()
 

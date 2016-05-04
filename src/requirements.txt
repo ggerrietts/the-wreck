@@ -8,3 +8,4 @@ nose
 psycopg2
 gevent
 six
+oboe
