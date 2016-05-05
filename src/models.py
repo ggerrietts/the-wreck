@@ -21,7 +21,8 @@ def arbitrary_dice_pattern():
         num, faces, op, bonus = next(assembly)
         if op is None:
             yield "{}d{}".format(num, faces)
-        yield "{}d{}{}{}".format(num, faces, op, bonus)
+        else:
+            yield "{}d{}{}{}".format(num, faces, op, bonus)
 
 
 def add_to_session_passthru(source, session):

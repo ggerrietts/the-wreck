@@ -3,9 +3,10 @@ import logging
 import argparse
 import gevent
 import signal
-from gevent.coros import BoundedSemaphore
 import time
+import random
 from itertools import chain, cycle, product
+from gevent.coros import BoundedSemaphore
 from six import print_, next
 from models import arbitrary_dice_pattern
 
@@ -21,8 +22,11 @@ def launch_generators(gen_list):
     print_("Launching traffic generators: {}".format(gens))
     gevent.signal(signal.SIGQUIT, gevent.kill)
     all_generators = [REGISTRY[g]() for g in gen_list]
-    nested_workers = [g.start() for g in all_generators]
-    all_workers = list(chain.from_iterable(nested_workers))
+    all_workers = []
+    for g in all_generators:
+        print_("Rockin' in the free world")
+        all_workers.extend(g.start())
+    print_("Borg assembled")
     gevent.joinall(all_workers)
     print_("Traffic generation complete.")
 
@@ -154,7 +158,7 @@ def argument_clinic():
         yield (player, game, dice)
 
 class QuietNeighborTrafficGenerator(TrafficGenerator):
-    url = 'http://192.168.12.34/quiet/{}/{}/{}'
+    url = 'http://web.wreck.tlys.us/quiet/{}/{}/{}'
     label = "quiet"
 
     time_limit = 60
@@ -172,30 +176,35 @@ class QuietNeighborTrafficGenerator(TrafficGenerator):
             stop = time.time()
             self.request_completed()
             self.log("{} {} {}".format(url, resp.status_code, stop - start))
+register(QuietNeighborTrafficGenerator)
 
 class NoisyNeighborTrafficGenerator(TrafficGenerator):
     """ does nothing for first half of its run time, then
         starts hitting the aux box
     """
-    url = 'http://192.168.12.34/noisy'
+    url = 'http://aux.wreck.tlys.us/noisy'
     label = "noisy"
 
     time_limit = 60
 
     def skip(self):
-        dur = time.time() - time.start_time
+        dur = time.time() - self.start_time
         return (dur < (self.time_limit / 2))
 
     def traffic(self):
         while not self.limit_exceeded():
             if self.skip():
-                time.sleep(1)
+                self.request_completed()
+                self.log("skipped")
+                gevent.sleep(random.random())
             else:
                 start = time.time()
                 resp = requests.get(self.url)
                 stop = time.time()
                 self.request_completed()
-                self.log("{} {} {}".format(url, resp.status_code, stop - start))
+                self.log("{} {} {}".format(self.url, resp.status_code, stop - start))
+
+register(NoisyNeighborTrafficGenerator)
 
 def main():
     parser = build_arg_parser()
@@ -216,4 +225,6 @@ def main():
 
 
 if __name__ == "__main__":
+    from gevent import monkey
+    monkey.patch_all()
     main()

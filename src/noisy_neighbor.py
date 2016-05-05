@@ -22,12 +22,11 @@ def quiet(player, game, code):
     return render_template('quiet_neighbor.html', player=player, game=game, roll=roll)
 
 @app.route('/noisy/')
-def noisy(login):
+def noisy():
     players = Player.query.all()
     for player in players:
         player.first_name = 'Spartacus'
     db.session.flush()
-    time.sleep(2)
     db.session.rollback()
     return render_template('noisy_neighbor.html')
 
