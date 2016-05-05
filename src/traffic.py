@@ -7,6 +7,7 @@ import time
 import random
 from itertools import chain, cycle, product
 from gevent.coros import BoundedSemaphore
+from gevent.queue import Queue, Empty
 from six import print_, next
 from models import arbitrary_dice_pattern
 
@@ -166,16 +167,37 @@ class QuietNeighborTrafficGenerator(TrafficGenerator):
     def __init__(self):
         super(QuietNeighborTrafficGenerator, self).__init__()
         self.args = argument_clinic()
+        self.queue = Queue(10)
+        for i in range(5):
+            self.queue.put(i)
+
+    def queue_mgr(self):
+        while not self.limit_exceeded():
+            try:
+                self.queue.put(True, block=False)
+            except Empty:
+                pass
+            gevent.sleep(0.5)
 
     def traffic(self):
         while not self.limit_exceeded():
-            args = next(self.args)
-            url = self.url.format(*args)
-            start = time.time()
-            resp = requests.get(url)
-            stop = time.time()
-            self.request_completed()
-            self.log("{} {} {}".format(url, resp.status_code, stop - start))
+            try:
+                token = self.queue.get(timeout=0.2)
+                args = next(self.args)
+                url = self.url.format(*args)
+                start = time.time()
+                resp = requests.get(url)
+                stop = time.time()
+                self.request_completed()
+                self.log("{} {} {}".format(url, resp.status_code, stop - start))
+            except Empty:
+                pass
+
+    def start(self):
+        self.start_time = time.time()
+        self.workers = [gevent.spawn(self.traffic) for _ in range(self.concurrency)]
+        self.workers.append(gevent.spawn(self.queue_mgr))
+        return self.workers
 register(QuietNeighborTrafficGenerator)
 
 class NoisyNeighborTrafficGenerator(TrafficGenerator):
