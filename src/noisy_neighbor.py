@@ -27,6 +27,7 @@ def noisy():
     for player in players:
         player.first_name = 'Spartacus'
     db.session.flush()
+    time.sleep(2)
     db.session.rollback()
     return render_template('noisy_neighbor.html')
 
