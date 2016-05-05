@@ -161,7 +161,7 @@ class QuietNeighborTrafficGenerator(TrafficGenerator):
     url = 'http://web.wreck.tlys.us/quiet/{}/{}/{}'
     label = "quiet"
 
-    time_limit = 60
+    time_limit = 3600
 
     def __init__(self):
         super(QuietNeighborTrafficGenerator, self).__init__()
@@ -185,7 +185,7 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
     url = 'http://aux.wreck.tlys.us/noisy'
     label = "noisy"
 
-    time_limit = 60
+    time_limit = 3600
 
     def skip(self):
         dur = time.time() - self.start_time
