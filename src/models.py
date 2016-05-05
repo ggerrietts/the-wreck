@@ -85,7 +85,6 @@ class Player(db.Model):
         for name, surname in name_source:
             idnum += 1
             player = cls(
-                id=idnum,
                 login=cls.build_login(name, surname),
                 password=cls.build_password([idnum, name, surname]),
                 first_name=name,
@@ -128,7 +127,7 @@ class Game(db.Model):
             idnum += 1
             num_players = next(num_source)
             import sys
-            game = cls(id=idnum, name="Game {}".format(idnum))
+            game = cls(name="Game {}".format(idnum))
             players = [next(player_source) for x in range(num_players)]
             game.players.extend(players)
             yield game
@@ -164,7 +163,7 @@ class Roll(db.Model):
                 for player in game.players:
                     if idnum < limit:
                         idnum += 1
-                        roll = cls(id=idnum, game=game, player=player, code=dice_code)
+                        roll = cls(game=game, player=player, code=dice_code)
                         roll.parse_code(dice_code)
                         roll.roll()
                         yield roll

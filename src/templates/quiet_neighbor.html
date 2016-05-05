@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Quiet Dice{% endblock %}
+
+{% block content %}
+<h1>That Was a Really Nice Roll!</h1>
+{% for player in players %}
+<div class="col-md-4">
+<ul class="list-group">
+  <li class="list-group-item">
+    <p class="list-group-item-heading">Player</p>
+    <p class="list-group-item-text">{{ player.first_name }} {{ player.last_name }} (<i>{{ player.login }}</i>)</p>
+  </li>
+  <li class="list-group-item">
+    <p class="list-group-item-heading">Game</p>
+    <p class="list-group-item-text">{{ game.name }}</p>
+  </li>
+  <li class="list-group-item">
+    <p class="list-group-item-heading">Roll</p>
+    <p class="list-group-item-text">{{ dice.code }} <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> {{ dice.result }}</p>
+  </li>
+{% endblock %}

@@ -5,8 +5,9 @@ import gevent
 import signal
 from gevent.coros import BoundedSemaphore
 import time
-from itertools import chain, cycle
+from itertools import chain, cycle, product
 from six import print_, next
+from models import arbitrary_dice_pattern
 
 REGISTRY = {}
 
@@ -144,6 +145,57 @@ class ThousandTrafficGenerator(TrafficGenerator):
 register(ThousandTrafficGenerator)
 
 
+def argument_clinic():
+    dice_pats = arbitrary_dice_pattern()
+    while True:
+        player = random.randint(1, 2000)
+        game = random.randint(1, 8000)
+        dice = next(dice_pats)
+        yield (player, game, dice)
+
+class QuietNeighborTrafficGenerator(TrafficGenerator):
+    url = 'http://192.168.12.34/quiet/{}/{}/{}'
+    label = "quiet"
+
+    time_limit = 60
+
+    def __init__(self):
+        super(QuietNeighborTrafficGenerator, self).__init__()
+        self.args = argument_clinic()
+
+    def traffic(self):
+        while not self.limit_exceeded():
+            args = next(self.args)
+            url = self.url.format(*args)
+            start = time.time()
+            resp = requests.get(url)
+            stop = time.time()
+            self.request_completed()
+            self.log("{} {} {}".format(url, resp.status_code, stop - start))
+
+class NoisyNeighborTrafficGenerator(TrafficGenerator):
+    """ does nothing for first half of its run time, then
+        starts hitting the aux box
+    """
+    url = 'http://192.168.12.34/noisy'
+    label = "noisy"
+
+    time_limit = 60
+
+    def skip(self):
+        dur = time.time() - time.start_time
+        return (dur < (self.time_limit / 2))
+
+    def traffic(self):
+        while not self.limit_exceeded():
+            if self.skip():
+                time.sleep(1)
+            else:
+                start = time.time()
+                resp = requests.get(self.url)
+                stop = time.time()
+                self.request_completed()
+                self.log("{} {} {}".format(url, resp.status_code, stop - start))
 
 def main():
     parser = build_arg_parser()
