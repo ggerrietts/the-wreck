@@ -38,3 +38,18 @@ firewall_rule 'open up pgsql' do
   port 5432
 end
 
+cookbook_file "/etc/postgresql/9.3/main/postgresql.conf" do
+  source "postgresql.conf"
+  user "postgres"
+  group "postgres"
+  mode '0640'
+  notifies :restart, 'service[postgresql]', :delayed
+end
+
+cookbook_file "/etc/postgresql/9.3/main/pg_hba.conf" do
+  source "pg_hba.conf"
+  user "postgres"
+  group "postgres"
+  mode '0640'
+  notifies :restart, 'service[postgresql]', :delayed
+end

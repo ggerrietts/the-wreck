@@ -33,9 +33,9 @@ Performance problems to highlight:
   - [x] big query
 - [x] Thousand Selects
 - [ ] Noisy Neighbor
+  - [ ] refactor for better noise
 - [ ] memory fragmentation
-- [ ] remote timeout
-- [ ] webserver queueing
-- [ ] externalize postgres password
-- [ ] postgres server config: listen address in postgresql.conf and auth line in pg_hba.conf
-- [ ] need to fix the git stuff so it freshens
+- [x] externalize postgres password
+- [x] postgres server config: listen address in postgresql.conf and auth line in pg_hba.conf
+- [x] need to fix the git stuff so it freshens
+- [ ] nginx logging for latency

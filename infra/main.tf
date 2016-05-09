@@ -14,6 +14,7 @@ provider "aws" {
 
 module "db" {
   node_name = "db"
+  db_ip_addr = "localhost"
   source = "./ec2-wreck"
   dev_access_key  = "${var.dev_access_key}"
   dev_secret_key  = "${var.dev_secret_key}"
@@ -23,6 +24,7 @@ module "db" {
 
 module "web" {
   node_name = "web"
+  db_ip_addr = "${module.db.ipaddr}"
   source = "./ec2-wreck"
   dev_access_key  = "${var.dev_access_key}"
   dev_secret_key  = "${var.dev_secret_key}"
@@ -32,6 +34,7 @@ module "web" {
 
 module "traffic" {
   node_name = "traffic"
+  db_ip_addr = "${module.db.ipaddr}"
   source = "./ec2-wreck"
   dev_access_key  = "${var.dev_access_key}"
   dev_secret_key  = "${var.dev_secret_key}"
@@ -41,6 +44,7 @@ module "traffic" {
 
 module "aux" {
   node_name = "aux"
+  db_ip_addr = "${module.db.ipaddr}"
   source = "./ec2-wreck"
   dev_access_key  = "${var.dev_access_key}"
   dev_secret_key  = "${var.dev_secret_key}"

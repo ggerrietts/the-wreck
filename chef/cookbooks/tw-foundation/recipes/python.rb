@@ -33,10 +33,10 @@ if node.chef_environment == 'vagrant' then
 else
     git appr do
         repository repo
-        action :checkout
+        revision 'master'
+        action :sync
         user vusr
         group vgrp
-        not_if { File.exist?(appr) }
     end
 end
 

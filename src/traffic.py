@@ -177,7 +177,7 @@ class QuietNeighborTrafficGenerator(TrafficGenerator):
                 self.queue.put(True, block=False)
             except Empty:
                 pass
-            gevent.sleep(0.5)
+            gevent.sleep(0.2)
 
     def traffic(self):
         while not self.limit_exceeded():
@@ -243,7 +243,6 @@ def main():
                         level=log_levels[args.loglevel],
                         format="%(asctime)s %(name)s %(levelname)s %(message)s")
     launch_generators(generators)
-
 
 
 if __name__ == "__main__":

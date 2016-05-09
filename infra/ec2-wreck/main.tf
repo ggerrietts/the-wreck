@@ -1,5 +1,6 @@
 
 variable "node_name" {}
+variable "db_ip_addr" {}
 
 variable "dev_access_key" {}
 variable "dev_secret_key" {}
@@ -40,12 +41,16 @@ resource "aws_instance" "ec2_wreck" {
       destination = "/home/ubuntu/cookbooks"
     }
 
-    provisioner "remote-exec" {
-      inline = ["echo \"${var.node_name}\" >| /home/ubuntu/role"]
+    provisioner "file" {
+      source = "provision-node.sh"
+      destination = "/home/ubuntu/provision-node.sh"
     }
 
     provisioner "remote-exec" {
-      script = "gen-local-rb.sh"
+      inline = [
+        "chmod +x /home/ubuntu/provision-node.sh",
+        "provision-node.sh ${var.db_ip_addr} ${var.node_name}",
+
     }
 
     provisioner "remote-exec" {
@@ -64,4 +69,5 @@ resource "aws_route53_record" "cname" {
 
 
 output "cname" { value = "${aws_route53_record.cname.fqdn}" }
+output "ipaddr" { value = "${aws_instance.ec2_wreck.private_ip}" }
 
