@@ -31,11 +31,12 @@ Performance problems to highlight:
 
 - [x] Truculent Query
   - [x] big query
+  - [x] rewrite as SQL
 - [x] Thousand Selects
-- [ ] Noisy Neighbor
-  - [ ] refactor for better noise
+- [x] Noisy Neighbor
+  - [x] refactor for better noise
 - [ ] memory fragmentation
 - [x] externalize postgres password
 - [x] postgres server config: listen address in postgresql.conf and auth line in pg_hba.conf
 - [x] need to fix the git stuff so it freshens
-- [ ] nginx logging for latency
+- [x] nginx logging for latency
