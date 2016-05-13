@@ -51,5 +51,13 @@ cookbook_file "/etc/postgresql/9.3/main/pg_hba.conf" do
   user "postgres"
   group "postgres"
   mode '0640'
-  notifies :restart, 'service[postgresql]', :delayed
+  # immediately restart or else we won't be able to populate the db
+  notifies :restart, 'service[postgresql]', :immediate
 end
+
+
+service 'postgresql' do
+    supports :restart => true, :start => true, :stop => true
+    action :nothing
+end
+
