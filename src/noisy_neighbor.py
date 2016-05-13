@@ -21,14 +21,22 @@ def quiet(player, game, code):
     db.session.commit()
     return render_template('quiet_neighbor.html', player=player, game=game, roll=roll)
 
-@app.route('/noisy/')
-def noisy():
-    players = Player.query.all()
-    for player in players:
-        player.first_name = 'Spartacus'
-    db.session.flush()
-    time.sleep(2)
-    db.session.rollback()
+@app.route('/noisy/<login>')
+def noisy(login):
+    sql = (
+        "select p.login, p.first_name, p.last_name, c.die, c.num, c.total "
+            "from ("
+                "select pp.login as login, "
+                        "rr.die_sides as die, "
+                        "sum(rr.num_dice) as num, "
+                        "sum(rr.result - rr.bonus) as total "
+                "from tw_players pp, tw_rolls rr "
+                "where pp.id = rr.player_id "
+                "group by pp.login, rr.die_sides"
+            ") as c join tw_players p on p.login = c.login "
+        "where p.login = :pat"
+    )
+    qry_rslt = db.session.execute(sql, dict(pat=login))
     return render_template('noisy_neighbor.html')
 
 if __name__ == "__main__":
