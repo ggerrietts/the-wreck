@@ -9,4 +9,4 @@ setgid <%= node['wreck']['web_group'] %>
 
 env PATH=<%= node['wreck']['virtualenv'] %>/bin
 chdir <%= node['wreck']['app_root'] %>/src
-exec gunicorn --workers 3 --bind unix:/tmp/thewreck.sock -m 007 wsgi
+exec gunicorn --workers 10 --bind unix:/tmp/thewreck.sock -m 007 wsgi
