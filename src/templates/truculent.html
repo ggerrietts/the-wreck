@@ -3,10 +3,10 @@
 
 {% block content %}
 <h1>A Really Slow Page of Dice Stuff</h1>
-{% for player in players %}
+{% for player, rolls in players|dictsort %}
 <div class="col-md-4">
 <div class="panel panel-default">
-  <div class="panel-heading"><h5>{{ player.first_name }} {{ player.last_name }} (<i>{{ player.login }}</i>)</h5></div>
+  <div class="panel-heading"><h5>{{ player[1] }} {{ player[2] }} (<i>{{ player[0] }}</i>)</h5></div>
   <table class="table">
   <thead><tr>
     <th>die type</th>
@@ -14,7 +14,7 @@
     <th>avg. roll</th>
   </tr></thead>
   <tbody>
-  {% for stats in player.rollstats %}
+  {% for stats in rolls %}
   <tr>
     <td>d{{ stats[0] }}</td>
     <td>{{ stats[1] }}</td>

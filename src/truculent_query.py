@@ -8,35 +8,30 @@ from models import Player, Game, Roll
 @app.route('/truculent/<login>')
 def truculent(login):
     pat = "%{}%".format(login)
-    roll_qry = (db.session.query(
-                    Player.login.label('login'),
-                    Roll.player_id.label('player_id'),
-                    Roll.die_sides.label('die'),
-                    func.sum(Roll.result - Roll.bonus).label('total'),
-                    func.sum(Roll.num_dice).label('num')
-                ).
-                filter(Player.id == Roll.player_id).
-                group_by(Player.login, Roll.player_id, Roll.die_sides)).subquery()
-    player_qry = (db.session.query(
-                    Player,
-                    roll_qry.c.die,
-                    roll_qry.c.num,
-                    roll_qry.c.total
-                  ).
-                  join(roll_qry, Player.id == roll_qry.c.player_id).
-                  filter(Player.login.like(pat)))
-    qry_rslt = player_qry.all()
+
+    sql = (
+        "select p.login, p.first_name, p.last_name, c.die, c.num, c.total "
+            "from ("
+                "select pp.login as login, "
+                        "rr.die_sides as die, "
+                        "sum(rr.num_dice) as num, "
+                        "sum(rr.result - rr.bonus) as total "
+                "from tw_players pp, tw_rolls rr "
+                "where pp.id = rr.player_id "
+                "group by pp.login, rr.die_sides"
+            ") as c join tw_players p on p.login = c.login "
+        "where p.login like :pat"
+    )
+
+    qry_rslt = db.session.execute(sql, dict(pat=pat))
 
     player_hash = {}
-    for (player, die, total, num) in qry_rslt:
-        pobj = player_hash.setdefault(player.id, player)
-        if not hasattr(pobj, 'rollstats'):
-            pobj.rollstats = []
-        pobj.rollstats.append((die, total, num))
-        pobj.rollstats.sort()
+    for (login, first_name, last_name, die, num, total) in qry_rslt:
+        pobj = player_hash.setdefault((login, first_name, last_name), [])
+        pobj.append((die, num, total))
+        pobj.sort()
 
-    players = list(player_hash.values())
-    return render_template('truculent.html', players=players)
+    return render_template('truculent.html', players=player_hash)
 
 
 if __name__ == "__main__":
