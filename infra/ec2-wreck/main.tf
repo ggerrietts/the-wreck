@@ -23,7 +23,7 @@ provider "aws" {
 
 resource "aws_instance" "ec2_wreck" {
     provider                = "aws.traceview-dev"
-    ami                     = "ami-9b49a8f6"
+    ami                     = "ami-ced937a3"
     instance_type           = "t2.medium"
     key_name                = "traceview-dev"
     vpc_security_group_ids  =  ["sg-1e827465"]
@@ -49,12 +49,8 @@ resource "aws_instance" "ec2_wreck" {
     provisioner "remote-exec" {
       inline = [
         "chmod +x /home/ubuntu/provision-node.sh",
-        "provision-node.sh ${var.db_ip_addr} ${var.node_name}",
-
-    }
-
-    provisioner "remote-exec" {
-      script = "do-chef-run.sh"
+        "provision-node.sh ${var.db_ip_addr} ${var.node_name}"
+      ]
     }
 }
 

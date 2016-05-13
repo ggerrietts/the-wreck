@@ -6,4 +6,4 @@ Building a new AMI with Packer required these steps:
 4. Cd to `../infra`
 5. Run `packer build -var-file=./.secret-vars.json the-wreck.packer.json`
 
-My AMI gg-wreck-foundation has id 'ami-a858bec5'
+My AMI gg-wreck-foundation has id 'ami-ced937a3'
