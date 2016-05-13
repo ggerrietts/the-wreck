@@ -36,6 +36,7 @@ end
 firewall_rule 'open up pgsql' do
   command :allow
   port 5432
+  notifies :restart, 'firewall[default]', :immediate
 end
 
 cookbook_file "/etc/postgresql/9.3/main/postgresql.conf" do
