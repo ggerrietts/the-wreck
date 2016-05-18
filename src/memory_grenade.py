@@ -1,0 +1,33 @@
+import random
+
+from flask import render_template
+from sqlalchemy.sql import func
+from sqlalchemy.orm import joinedload
+from app import app, db
+from models import Player
+
+
+@app.route('/grenade')
+def grenade():
+
+    pagenum = 2 ** random.randint(1, 10)
+    maxp = db.session.query(func.max(Player.id)).scalar()
+    all_ids = range(1, maxp)
+    random.shuffle(all_ids)
+    ids = all_ids[:pagenum]
+    uniqued = set(ids)
+
+    q = Player.query.options(joinedload('rolls')).filter(Player.id.in_(tuple(uniqued)))
+    player_list = q.all()
+    for player in player_list:
+        games = {}
+        for roll in player.rolls:
+            game = games.setdefault(roll.game_id, [])
+            game.append(roll)
+        player.game_dict = games
+
+    return render_template('grenade.html', players=player_list, num_players=pagenum)
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)

@@ -7,7 +7,7 @@ app.wsgi_app = OboeMiddleware(app.wsgi_app)
 import truculent_query
 import thousand_queries
 import noisy_neighbor
-# import memory_grenade
+import memory_grenade
 
 application = app
 

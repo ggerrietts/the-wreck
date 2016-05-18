@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Memory Grenade{% endblock %}
+
+{% block content %}
+<h1>The Games of {{num_players}} Random Players</h1>
+{% for p in players %}
+<div class="col-md-12"><h2>{{ p.first_name }} {{ p.last_name }} (<i>{{ p.login }}</i>)</h2></div>
+{% for gid, rolls in p.game_dict.items() %}
+<div class="col-md-4">
+<div class="panel panel-default">
+  <div class="panel-heading"><h5>Game {{ gid }}</h5></div>
+  <table class="table">
+  <tbody>
+      <tr><th>Roll</th><th>Result</th></tr>
+      {% for r in rolls if r.player_id == p.id %}
+      <tr><td>{{ r.code }}</td><td>{{ r.result }}</td></tr>
+      {% endfor %}
+  </tbody>
+  </table>
+</div>
+</div>
+{% endfor %}
+{% endfor %}
+{% endblock %}
