@@ -10,7 +10,7 @@ from models import Player
 @app.route('/grenade')
 def grenade():
 
-    pagenum = 2 ** random.randint(1, 10)
+    pagenum = 2 ** random.randint(1, 11)
     maxp = db.session.query(func.max(Player.id)).scalar()
     all_ids = range(1, maxp)
     random.shuffle(all_ids)
