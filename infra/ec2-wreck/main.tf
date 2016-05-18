@@ -36,6 +36,9 @@ resource "aws_instance" "ec2_wreck" {
     provisioner "remote-exec" {
       inline = ["rm -r /home/ubuntu/cookbooks", "mkdir /home/ubuntu/cookbooks"]
     }
+    provisioner "local-exec" {
+      command = "pushd ../chef && berks vendor vendor"
+    }
     provisioner "file" {
       source = "../chef/vendor/"
       destination = "/home/ubuntu/cookbooks"

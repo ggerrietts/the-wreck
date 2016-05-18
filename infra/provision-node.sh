@@ -4,7 +4,7 @@ ROLE="$2"
 OUT='/home/ubuntu/cookbooks/tw-foundation/attributes/local.rb'
 
 echo "default['wreck']['dns_name'] = '${ROLE}.wreck.tlys.us'" >| $OUT
-echo "default['wreck']['db_host'] = 'db.wreck.tlys.us'" >> $OUT
+echo "default['wreck']['db_host'] = '${DB}'" >> $OUT
 
 case $ROLE in
   "db") sudo chef-client -z -o "tw-database";;
