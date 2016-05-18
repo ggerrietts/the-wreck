@@ -2,7 +2,7 @@
 {% block title %}Memory Grenade{% endblock %}
 
 {% block content %}
-<h1>The Games of {{num_players}} Random Players</h1>
+<h1>The Games of {{players|count}} Random Players</h1>
 {% for p in players %}
 <div class="col-md-12"><h2>{{ p.first_name }} {{ p.last_name }} (<i>{{ p.login }}</i>)</h2></div>
 {% for gid, rolls in p.game_dict.items() %}

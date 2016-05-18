@@ -26,7 +26,7 @@ def grenade():
             game.append(roll)
         player.game_dict = games
 
-    return render_template('grenade.html', players=player_list, num_players=pagenum)
+    return render_template('grenade.html', players=player_list)
 
 
 if __name__ == "__main__":
