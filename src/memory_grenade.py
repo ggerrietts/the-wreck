@@ -7,14 +7,12 @@ from app import app, db
 from models import Player
 
 
-@app.route('/grenade')
-def grenade():
-
-    pagenum = 2 ** random.randint(1, 11)
+@app.route('/grenade/<int:count>')
+def grenade(count):
     maxp = db.session.query(func.max(Player.id)).scalar()
-    all_ids = range(1, maxp)
+    all_ids = range(1, maxp + 1)
     random.shuffle(all_ids)
-    ids = all_ids[:pagenum]
+    ids = all_ids[:count]
     uniqued = set(ids)
 
     q = Player.query.options(joinedload('rolls')).filter(Player.id.in_(tuple(uniqued)))

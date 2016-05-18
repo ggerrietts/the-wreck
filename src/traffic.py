@@ -228,6 +228,34 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
 
 register(NoisyNeighborTrafficGenerator)
 
+def count_args():
+    while True:
+        yield random.choice([2 ** x for x in range(12)])
+
+class MemoryGrenadeTrafficGenerator(TrafficGenerator):
+    """ throws a bunch of traffic at the endpoint until it goes boom
+    """
+    url = 'http://web.wreck.tlys.us/grenade/{}'
+    label = "grenade"
+
+    time_limit = 3600
+
+    def __init__(self):
+        super(MemoryGrenadeTrafficGenerator, self).__init__()
+        self.args = count_args()
+
+    def traffic(self):
+        while not self.limit_exceeded():
+            args = next(self.args)
+            url = self.url.format(*args)
+            start = time.time()
+            resp = requests.get(url)
+            stop = time.time()
+            self.request_completed()
+            self.log("{} {} {}".format(url, resp.status_code, stop - start))
+register(TruculentTrafficGenerator)
+
+
 def main():
     parser = build_arg_parser()
     args = parser.parse_args()
