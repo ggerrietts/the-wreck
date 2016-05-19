@@ -253,7 +253,7 @@ class MemoryGrenadeTrafficGenerator(TrafficGenerator):
             stop = time.time()
             self.request_completed()
             self.log("{} {} {}".format(url, resp.status_code, stop - start))
-register(TruculentTrafficGenerator)
+register(MemoryGrenadeTrafficGenerator)
 
 
 def main():
