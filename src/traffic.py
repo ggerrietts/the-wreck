@@ -229,8 +229,9 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
 register(NoisyNeighborTrafficGenerator)
 
 def count_args():
+    picklist = [2 ** x for x in range(12)]
     while True:
-        yield random.choice([2 ** x for x in range(12)])
+        yield (random.choice(picklist),)
 
 class MemoryGrenadeTrafficGenerator(TrafficGenerator):
     """ throws a bunch of traffic at the endpoint until it goes boom
