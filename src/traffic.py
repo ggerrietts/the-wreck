@@ -7,7 +7,7 @@ import time
 import random
 from itertools import chain, cycle, product
 from gevent.coros import BoundedSemaphore
-from gevent.queue import Queue, Empty
+from gevent.queue import Queue, Empty, Full
 from six import print_, next
 from models import arbitrary_dice_pattern
 
@@ -175,7 +175,7 @@ class QuietNeighborTrafficGenerator(TrafficGenerator):
         while not self.limit_exceeded():
             try:
                 self.queue.put(True, block=False)
-            except Empty:
+            except Full:
                 pass
             gevent.sleep(0.2)
 
