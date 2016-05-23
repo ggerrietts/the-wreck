@@ -212,7 +212,7 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
 
     def skip(self):
         dur = time.time() - self.start_time
-        return (dur < (self.time_limit / 2))
+        return (dur < (self.time_limit / 4))
 
     def traffic(self):
         while not self.limit_exceeded():
