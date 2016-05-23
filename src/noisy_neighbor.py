@@ -21,8 +21,9 @@ def quiet(player, game, code):
     db.session.commit()
     return render_template('quiet_neighbor.html', player=player, game=game, roll=roll)
 
-@app.route('/noisy/<login>')
-def noisy(login):
+@app.route('/noisy')
+def noisy():
+    pat = '%xyz%'
     sql = (
         "select p.login, p.first_name, p.last_name, c.die, c.num, c.total "
             "from ("
@@ -34,9 +35,9 @@ def noisy(login):
                 "where pp.id = rr.player_id "
                 "group by pp.login, rr.die_sides"
             ") as c join tw_players p on p.login = c.login "
-        "where p.login = :pat"
+        "where p.login like :pat"
     )
-    qry_rslt = db.session.execute(sql, dict(pat=login))
+    qry_rslt = db.session.execute(sql, dict(pat=pat))
     return render_template('noisy_neighbor.html')
 
 if __name__ == "__main__":
