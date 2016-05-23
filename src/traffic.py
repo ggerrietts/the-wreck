@@ -208,6 +208,7 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
     label = "noisy"
 
     time_limit = 3600
+    concurrency = 10
 
     def skip(self):
         dur = time.time() - self.start_time
