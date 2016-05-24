@@ -233,7 +233,7 @@ def count_args():
     powers = [2 ** i for i in range(11)]
     picklist = []
     for (i, n) in enumerate(powers):
-        picklist.extend([n] ** (11 - i))
+        picklist.extend([n] * (11 - i))
     while True:
         yield (random.choice(picklist),)
 
