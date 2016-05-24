@@ -230,7 +230,7 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
 register(NoisyNeighborTrafficGenerator)
 
 def count_args():
-    picklist = [2 ** x for x in range(6)]
+    picklist = [2 ** x for x in range(3)]
     while True:
         yield (random.choice(picklist),)
 
