@@ -230,8 +230,8 @@ class NoisyNeighborTrafficGenerator(TrafficGenerator):
 register(NoisyNeighborTrafficGenerator)
 
 def count_args():
-    powers = [2 ** i for i in range(11)]
-    coeffs = powers[::-1]
+    powers = [2 ** i for i in range(10)]
+    coeffs = range(10, 0, -1)
     picklist = list(chain.from_iterable([[n] * c for (n, c) in zip(powers, coeffs)]))
     while True:
         yield (random.choice(picklist),)
