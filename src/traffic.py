@@ -231,9 +231,8 @@ register(NoisyNeighborTrafficGenerator)
 
 def count_args():
     powers = [2 ** i for i in range(11)]
-    picklist = []
-    for (i, n) in enumerate(powers):
-        picklist.extend([n] * (11 - i))
+    coeffs = powers[::-1]
+    picklist = list(chain.from_iterable([[n] * c for (n, c) in zip(powers, coeffs)]))
     while True:
         yield (random.choice(picklist),)
 
